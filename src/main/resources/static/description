@@ -1,0 +1,59 @@
+아래 서버에서 제공하는 데이터를 가공하여 처리된 결과를 반환하는 API를 만드는 작업입니다. (DB는 사용하지 않습니다 )
+서버 URL: https://s3.ap-northeast-2.amazonaws.com/bunjang-interview/events.json
+위 S3에 저장된 데이터는 정적 데이터이지만, 이를 API로 간주하여 아래의 요구 사항을 만족하도록 API를 작성하시면 됩니다.
+입력값: 이벤트의 배열
+예)
+[
+  {
+    id: "3219029661",
+    type: "WatchEvent",
+    actor: {
+      id: 6626956,
+      login: "HeshamAbdalla"
+    }
+  },
+  {
+    id: "3219029662",
+    type: "IssueCommentEvent",
+    actor: {
+      id: 6626956,
+      login: "rafaelfranca"
+    }
+  },
+  ...
+]
+
+1)
+위 url(데이터)를 호출(다운로드)하여 json데이터를 출력(반환)하는 아래의 API를 구현해 주세요.
+GET /api/v1/events
+
+2)
+각 사용자(actor) 별로 각 이벤트 유형 별(type) 수, 총 이벤트 수를 events 객체에 포함하여 아래의 형식으로 반환하는 API를 구현해 주세요. API 패스는 아래와 같습니다.
+GET /api/v1/events/summaries
+결과값: 유저 배열 TotalEvent는 모든 event의 합이 되어야 합니다 API를 call하면 분석한 데이터를 아래와 같은 json으로 리턴해야 합니다 결과는 login 유저별 리스트 입니다.
+[
+  {
+    login: "rafaelfranca",
+    events: {
+      TotalEvent: 20,
+      IssueCommentEvent: 10,
+      PullRequestEvent: 3,
+      IssuesEvent: 3,
+      PushEvent: 2,
+      PullRequestReviewCommentEvent: 2
+    }
+  },
+  ...
+]
+
+3)
+2)에서 구현한 API에서 sort로 전달된 parameter를 이용하여 해당 이벤트의 수가 많은 순으로 정렬된 결과를 반환하도록 보강해주세요.
+sort가 없을 때는 TotalEvent가 많은 순으로 정렬하면 됩니다.
+api path의 형태는 아래와 같다.
+예1) GET /api/v1/event-summaries?sort=WatchEvent
+예2) GET /api/v1/event-summaries?sort=IssueCommentEvent
+sort로 전달된 parameter를 이용하여 해당 이벤트의 수가 많은 순으로 정렬된 결과를 반환한다. sort가 없을 때는 TotalEvent가 많은 순으로 정렬한다.
+
+유의 사항
+이벤트는 현재 정의된 이벤트 외에도 다양한 이벤트가 추가될 수 있도록 이벤트 수를 집계하는 events는 Map을 활용하여 처리해주세요.
+오픈북 형식의 테스트이므로, 기존에 작성하신 코드를 재활용해도 되고, 구글링을 통해 필요한 정보를 검색하셔도 됩니다.
