@@ -11,9 +11,8 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class Event {
+public class Actor {
 
   private String id;
-  private String type;
-  private Actor actor;
+  private String login;
 }
