@@ -1,15 +1,10 @@
 package com.springboot.service;
 
-import com.google.gson.Gson;
-import com.springboot.domain.Event;
-import com.springboot.dto.EventDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.springboot.model.EventData;
 import com.springboot.thirdparty.EventStorage;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,19 +21,9 @@ class EventServiceTest {
   EventStorage eventStorage;
 
   @Test
-  public void getEventList() {
-  }
-
-  @Test
-  public void convertJsonString() throws ParseException {
-    String event = eventStorage.getEventStorage();
-    JSONParser jsonParser = new JSONParser();
-    JSONArray jsonArray = (JSONArray) jsonParser.parse(event);
-    Gson gson = new Gson();
-
-    List<EventDto> eventList = new ArrayList<>();
-    for (int i = 0; i < jsonArray.size(); i++) {
-      eventList.add(gson.fromJson(jsonArray.get(i).toString(), (Type) Event.class));
-    }
+  public void getEventList() throws JsonProcessingException {
+    List<EventData> eventData = eventService.getEventList();
+    Long expectedId = 8594176318L;
+    Assert.assertEquals(expectedId, eventData.get(0).getId());
   }
 }
