@@ -13,6 +13,6 @@ import lombok.Setter;
 @Getter
 public class Actor {
 
-  private String id;
+  private Long id;
   private String login;
 }

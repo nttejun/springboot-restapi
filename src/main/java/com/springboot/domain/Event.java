@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 public class Event {
 
-  private String id;
+  private Long id;
   private String type;
   private Actor actor;
 }
