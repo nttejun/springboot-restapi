@@ -1,23 +1,26 @@
 package com.springboot.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.exception.JsonParseException;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 @Slf4j
 public class JsonParser {
 
-  public static JSONArray toArray(String jsonString) {
-  JSONParser jsonParser = new JSONParser();
+  private static final ObjectMapper objectMapper = new ObjectMapper();
+
+  public static <T> T convert(String from, TypeReference type) {
     try {
-      return (JSONArray) jsonParser.parse(jsonString);
-    } catch (ParseException e) {
-      log.error("[ERROR][JSON][PARSE] - Can't parse : {}", jsonParser);
+      return (T) objectMapper.readValue(from, type);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      log.error("[ERROR][PARSE][JSON] - Can't parse : {}", from);
       throw new JsonParseException();
     } catch (Exception e) {
-      log.error("[ERROR][JSON][ETC] - Can't parse : {}", jsonParser);
+      e.printStackTrace();
+      log.error("[ERROR][PARSE][ETC] - Can't parse : {}", from);
       throw new JsonParseException();
     }
   }

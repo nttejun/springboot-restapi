@@ -1,6 +1,5 @@
 package com.springboot.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springboot.model.EventData;
 import com.springboot.thirdparty.EventStorage;
 import java.util.List;
@@ -21,7 +20,7 @@ class EventServiceTest {
   EventStorage eventStorage;
 
   @Test
-  public void getEventList() throws JsonProcessingException {
+  public void getEventList() {
     List<EventData> eventData = eventService.getEventList();
     Long expectedId = 8594176318L;
     Assert.assertEquals(expectedId, eventData.get(0).getId());

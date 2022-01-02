@@ -1,6 +1,5 @@
 package com.springboot.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.springboot.api.response.ApiResponse;
 import com.springboot.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ public class EventController {
   EventService eventService;
 
   @GetMapping(value = "/api/v1/events")
-  public ApiResponse<?> getEventList() throws JsonProcessingException {
+  public ApiResponse<?> getEventList() {
     return ApiResponse.ok(eventService.getEventList());
   }
 }
